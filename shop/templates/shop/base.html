@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Kani Medical{% endblock %}</title>
+
+  <!-- Google Font Urbanist -->
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
+
+<!-- Load external stylesheet -->
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+  <style>
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #ffffff;
+      border-bottom: 1px solid #eaeaea;
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      transition: all 0.3s ease-in-out;
+    }
+    .navbar.scrolled {
+      box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .navbar-brand img {
+      width: 55px;
+      height: auto;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .brand-text span {
+      font-weight: 700;
+      font-size: 1.3rem;
+      background: linear-gradient(90deg, #2697F6, #14B8A6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-text small {
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, #2697F6, #14B8A6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .navbar-nav {
+      margin: 0 auto;
+    }
+    .navbar-nav .nav-link {
+      color: #000 !important;
+      font-weight: 500;
+      margin: 0 12px;
+      position: relative;
+    }
+.navbar-nav .nav-link {
+  position: relative;
+  padding: 8px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  background: linear-gradient(90deg, #2697F6, #14B8A6);
+  color: #fff !important;
+}
+
+    /* Search bar */
+    .search-bar {
+      position: relative;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    .search-bar input {
+      border: 2px solid #2697F6;
+      border-radius: 8px;
+      padding-right: 35px;
+    }
+    .search-bar .bi-search {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #2697F6;
+    }
+
+    /* Icons */
+    .icon-grey {
+      color: grey !important;
+      font-size: 1.3rem;
+      transition: transform 0.2s ease-in-out;
+    }
+    .icon-grey:hover {
+      transform: scale(1.2);
+      color: #2697F6 !important;
+    }
+
+    /* Login button */
+    .btn-login {
+      background-color: #2697F6;
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px 16px;
+      font-weight: 600;
+      transition: all 0.3s ease-in-out;
+    }
+    .btn-login:hover {
+      background-color: #14B8A6;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      background-color: rgba(20, 184, 166, 0.05);
+      padding: 40px 0;
+      animation: fadeInUp 0.8s ease-in-out;
+    }
+    footer h5 {
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #000;
+    }
+    footer ul {
+      list-style: none;
+      padding: 0;
+    }
+    footer ul li a {
+      text-decoration: none;
+      color: grey;
+      transition: 0.3s;
+    }
+    footer ul li a:hover {
+      color: #2697F6;
+    }
+
+    /* Footer Logo */
+    .footer-logo {
+      display: flex;
+      align-items: center;
+    }
+    .footer-logo img {
+      width: 70px;
+      height: auto;
+      margin-right: 12px;
+    }
+    .footer-logo .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .footer-logo .brand-text span,
+    .footer-logo .brand-text small {
+      font-weight: 700;
+      background: linear-gradient(90deg, #2697F6, #14B8A6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Contact Info */
+    .contact-info p {
+      margin: 5px 0;
+      color: grey;
+      display: flex;
+      align-items: center;
+    }
+    .contact-info i {
+      color: #2697F6;
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+<nav class="navbar navbar-expand-lg shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+      <img src="{% static 'images/i.png' %}" alt="Logo">
+      <div class="brand-text ms-2">
+        <span>KANI</span>
+        <small>MEDICAL</small>
+      </div>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" 
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav text-center">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'categories' %}">Categories</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'About' %}">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'Contact' %}">Contact Us</a></li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-3 ms-auto">
+        <!-- Search bar -->
+        <form class="search-bar">
+          <input class="form-control" type="search" placeholder="Search medicines..." aria-label="Search">
+          <i class="bi bi-search"></i>
+        </form>
+
+        <!-- Cart with dynamic count -->
+<a href="{% url 'cart_page' %}" class="icon-grey position-relative">
+  <i class="bi bi-cart3"></i>
+  {% if cart_items_count %}
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    {{ cart_items_count }}
+  </span>
+  {% endif %}
+</a>
+
+
+        <!-- Notifications -->
+        <a href="#" class="icon-grey"><i class="bi bi-bell"></i></a>
+
+        <!-- Login / Authenticated User -->
+        {% if user.is_authenticated %}
+          <div class="dropdown">
+            <a class="btn btn-login dropdown-toggle" href="#" role="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ user.username }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="userMenu">
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+          </div>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+  <!-- Main Content -->
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <!-- Logo -->
+        <div class="col-md-4 mb-4">
+          <div class="footer-logo">
+            <img src="{% static 'images/i.png' %}" alt="Logo">
+            <div class="brand-text">
+              <span>KANI</span>
+              <small>MEDICAL</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="{% url 'categories' %}">Categories</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-md-4 mb-4">
+          <h5>Contact Us</h5>
+          <div class="contact-info">
+            <p><i class="bi bi-geo-alt-fill"></i>10/195, Kani Medical, Kamarajar</p>
+            <p>Salai, Kurmbalaperi Vilakku, Pavoorchatram</p>
+            <p><i class="bi bi-telephone-fill"></i>+91 7358812618</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <small>© 2025 Kani Medical. All Rights Reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Navbar shadow effect on scroll
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>

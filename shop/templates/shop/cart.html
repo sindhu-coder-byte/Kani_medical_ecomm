@@ -1,0 +1,258 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Cart - Kani Medical{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row">
+
+    <!-- Left: Billing & Payment Info -->
+    <div class="col-12 col-md-6 mb-4">
+      <div class="card shadow-sm p-4 mb-4">
+        <h4 class="fw-bold mb-3">Billing & Payment Info</h4>
+
+        <!-- Checkout Form -->
+        <form id="checkoutForm" method="POST" action="{% url 'checkout_page' %}">
+          {% csrf_token %}
+
+          <!-- Customer Info -->
+          <div class="row mb-3">
+            <div class="col">
+              <input type="text" class="form-control border-primary" name="first_name" placeholder="First Name" required>
+            </div>
+            <div class="col">
+              <input type="text" class="form-control border-primary" name="last_name" placeholder="Last Name" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <input type="email" class="form-control border-primary" name="email" placeholder="Email Address" required>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col">
+              <input type="text" class="form-control border-primary" name="phone" placeholder="Phone Number" required>
+            </div>
+            <div class="col">
+              <input type="text" class="form-control border-primary" name="pincode" placeholder="Pincode" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <textarea class="form-control border-primary" name="address" rows="3" placeholder="Address" required></textarea>
+          </div>
+
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="sameShipping">
+            <label class="form-check-label" for="sameShipping">Same as Shipping Address</label>
+          </div>
+
+          <!-- Payment Info -->
+<h5 class="fw-bold mb-2">Payment Method</h5>
+<div class="mb-4">
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="payment_method" id="cod" value="COD" checked>
+    <label class="form-check-label" for="cod">Cash on Delivery</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="payment_method" id="upi" value="UPI">
+    <label class="form-check-label" for="upi">UPI Payment</label>
+  </div>
+</div>
+          <!-- Submit -->
+          {% if total >= 1 %}
+<button type="button" id="payButton" class="btn btn-gradient-buy w-100 mb-3">
+  <i class="bi bi-lock-fill me-1"></i> Pay ₹{{ total }}
+</button>
+{% else %}
+<p class="text-danger">Cart is empty or total is too low for online payment.</p>
+{% endif %}
+
+        </form>
+      </div>
+    </div>
+
+    <!-- Right: Order Summary -->
+    <div class="col-12 col-md-6">
+      <div class="card shadow-sm p-3 mb-3">
+        <h4 class="fw-bold mb-3">Order Summary</h4>
+
+        <!-- Cart Items -->
+        {% for item in cart_items %}
+        <div class="d-flex justify-content-between align-items-start mb-3 border-bottom pb-2 cart-item">
+          <div class="d-flex align-items-center gap-2 flex-grow-1">
+            <img src="{{ item.product.image.url }}" class="img-thumbnail" 
+                 style="width:60px; height:60px; object-fit:cover;">
+            <div>
+              <p class="mb-1 fw-bold">{{ item.product.name }}</p>
+              <small>Qty: {{ item.quantity }}</small>
+
+              <!-- Price Info -->
+              {% if item.product.discount_price and item.product.discount_price < item.product.price %}
+                <div class="text-muted small mt-1">
+                  <span class="text-decoration-line-through">₹{{ item.product.price }}</span>
+                  <span class="text-success ms-1">₹{{ item.product.discount_price }}</span>
+                  {% if item.product.offer %}
+                    <span class="badge bg-danger ms-1">{{ item.product.offer }} OFF</span>
+                  {% endif %}
+                </div>
+              {% else %}
+                <div class="text-dark small mt-1">₹{{ item.product.price }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Item Total & Remove -->
+          <div class="text-end">
+            <span class="fw-bold item-total">₹{{ item.total_price }}</span>
+            <button type="button" class="btn btn-link text-danger p-0 ms-2" title="Remove Item" onclick="removeItem(this)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+
+        <hr>
+
+        <!-- Totals -->
+        <div class="d-flex justify-content-between mb-2">
+          <span>Subtotal</span>
+          <span>₹{{ subtotal }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Discount</span>
+          <span class="text-success">- ₹{{ discount }}</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span>Delivery</span>
+          <span class="text-success fw-bold">Free</span>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+          <span class="fw-bold">Total</span>
+          <span class="fw-bold">₹{{ total }}</span>
+        </div>
+
+        <div class="badge estimated-delivery mb-3">
+          Estimated Delivery: {{ estimated_delivery }}
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-shield-check text-success fs-4"></i>
+            <small class="fw-bold text-dark">100% Secure</small>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-truck text-success fs-4"></i>
+            <small class="fw-bold text-dark">Fast Delivery</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+.form-control.border-primary {
+  border-width: 2px;
+  border-color: #2697F6;
+  border-radius: 6px;
+}
+.btn-gradient-buy {
+  background: linear-gradient(90deg, #2697F6, #14B8A6);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.btn-gradient-buy:hover {
+  background: linear-gradient(90deg, #14B8A6, #2697F6);
+}
+.estimated-delivery {
+  background: linear-gradient(90deg, #2697F6, #14B8A6);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  display: inline-block;
+}
+</style>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+document.getElementById("payButton")?.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const selectedMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
+    const form = document.getElementById("checkoutForm");
+    const totalAmount = Math.round(parseFloat("{{ total }}") * 100);
+
+    if (!selectedMethod) return alert("Please select a payment method.");
+
+    // --- Cash on Delivery ---
+    if (selectedMethod === "COD") {
+        form.submit(); // just submit directly to backend
+        return;
+    }
+
+    // --- Razorpay (UPI / Online) ---
+    if (selectedMethod === "UPI") {
+        if (totalAmount < 100) {
+            alert("Amount too low for Razorpay payment");
+            return;
+        }
+
+        const options = {
+            key: "{{ razorpay_key_id }}",
+            amount: totalAmount,
+            currency: "INR",
+            name: "Kani Medical",
+            description: "Order Payment",
+            order_id: "{{ razorpay_order_id }}",  // Important for verification
+            image: "{% static 'images/i.png' %}",
+            handler: function (response) {
+                // Add Razorpay payment id and order id to the form and submit
+                const input1 = document.createElement("input");
+                input1.type = "hidden";
+                input1.name = "razorpay_payment_id";
+                input1.value = response.razorpay_payment_id;
+
+                const input2 = document.createElement("input");
+                input2.type = "hidden";
+                input2.name = "razorpay_order_id";
+                input2.value = response.razorpay_order_id;
+
+                const input3 = document.createElement("input");
+                input3.type = "hidden";
+                input3.name = "razorpay_signature";
+                input3.value = response.razorpay_signature;
+
+                form.append(input1, input2, input3);
+                form.submit();
+            },
+            prefill: {
+                name:
+                    document.querySelector('input[name="first_name"]').value +
+                    " " +
+                    document.querySelector('input[name="last_name"]').value,
+                email: document.querySelector('input[name="email"]').value,
+                contact: document.querySelector('input[name="phone"]').value
+            },
+            theme: { color: "#2697F6" },
+            modal: {
+                ondismiss: function () {
+                    alert("Payment cancelled");
+                }
+            }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+    }
+});
+</script>
+
+
+
+{% endblock %}

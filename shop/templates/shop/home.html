@@ -1,0 +1,432 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content text-center">
+    <h1>Your Trusted Online</h1>
+    <h2>Medical Store</h2>
+    <p>Affordable, Genuine & Fast Delivery - Get all your healthcare needs delivered to your doorstep</p>
+
+    <!-- Shop Now Button (Bigger + Cart Icon) -->
+    <a href="{% url 'categories' %}" class="btn btn-gradient btn-lg me-4">
+      <i class="bi bi-cart-fill me-2"></i> Shop Now
+    </a>
+
+    <!-- Explore Categories Button (Normal Size + Grid Icon) -->
+    <a href="{% url 'categories' %}" class="btn btn-border-gradient">
+      <i class="bi bi-grid-fill me-2"></i> Explore Categories
+    </a>
+  </div>
+</section>
+
+
+<!-- Shop by Categories -->
+
+
+<section id="categories" class="py-5">
+  <div class="container text-center">
+    <h2 class="mb-4 fw-bold">Shop by Categories</h2>
+    <div class="row g-4 justify-content-center">
+      
+      <div class="col-6 col-md-3">
+        <div class="category-card category-pink p-4 shadow-sm rounded text-dark">
+          <img src="{% static 'images/svg.png' %}" alt="Baby Care" class="category-icon mb-2">
+          <p>Baby Care</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="category-card category-blue p-4 shadow-sm rounded text-dark">
+          <img src="{% static 'images/i.png' %}" alt="Health Devices" class="category-icon mb-2">
+          <p>Health Devices</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="category-card category-green p-4 shadow-sm rounded text-dark">
+          <img src="{% static 'images/i1.png' %}" alt="Personal Care" class="category-icon mb-2">
+          <p>Personal Care</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="category-card category-purple p-4 shadow-sm rounded text-dark">
+          <img src="{% static 'images/i2.png' %}" alt="Skin Care" class="category-icon mb-2">
+          <p>Skin Care</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="category-card category-yellow p-4 shadow-sm rounded text-dark">
+          <img src="{% static 'images/i3.png' %}" alt="Face Care" class="category-icon mb-2">
+          <p>Face Care</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="category-card category-teal p-4 shadow-sm rounded text-dark">
+          <img src="{% static 'images/i 4.png' %}" alt="Ayurvedic Care" class="category-icon mb-2">
+          <p>Ayurvedic Care</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="category-card category-orange p-4 shadow-sm rounded text-dark">
+          <img src="{% static 'images/i5.png' %}" alt="Veterinary" class="category-icon mb-2">
+          <p>Veterinary</p>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="category-card category-purple p-4 shadow-sm rounded text-dark">
+          <img src="{% static 'images/i6.png' %}" alt="Aroma Therapy" class="category-icon mb-2">
+          <p>Aroma Therapy</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- Why Choose -->
+<section id="features" class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="mb-4 fw-bold">Why Choose Kani Medical</h2>
+    <div class="row g-4">
+      
+      <div class="col-6 col-md-3">
+        <div class="feature-card">
+          <i class="bi bi-check-circle-fill icon-green"></i>
+          <h5>Genuine Products</h5>
+          <p>100% authentic medicines and healthcare products</p>
+        </div>
+      </div>
+      
+      <div class="col-6 col-md-3">
+        <div class="feature-card">
+          <i class="bi bi-truck icon-blue"></i>
+          <h5>Fast Delivery</h5>
+          <p>Same day delivery in metro cities</p>
+        </div>
+      </div>
+      
+      <div class="col-6 col-md-3">
+        <div class="feature-card">
+          <i class="bi bi-cash-stack icon-yellow"></i>
+          <h5>Affordable Prices</h5>
+          <p>Best prices with regular discounts</p>
+        </div>
+      </div>
+      
+      <div class="col-6 col-md-3">
+        <div class="feature-card">
+          <i class="bi bi-headset icon-purple"></i>
+          <h5>24/7 Support</h5>
+          <p>Round the clock customer assistance</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Featured Products -->
+<section id="featured" class="py-5" style="background-color:rgba(20, 184, 166, 0.15);">
+  <div class="container text-center">
+    <h2 class="mb-4 fw-bold text-black">Featured Products</h2>
+    <div class="row g-4 justify-content-center">
+
+      <!-- Product Card -->
+      <div class="col-md-3">
+        <div class="product-card p-3 rounded shadow" style="background: rgba(255, 255, 255, 0.95);">
+          <img src="{% static 'images/img.png' %}" class="img-fluid rounded mb-2" alt="Digital Thermometer">
+          <h6 class="mt-2 fw-bold">Digital Thermometer</h6>
+          <div class="rating mb-1 text-warning">
+            ★★★★☆ <span class="text-muted">(25 reviews)</span>
+          </div>
+          <p class="price mb-2">
+            <span class="original-price text-muted text-decoration-line-through">₹300</span>
+            <span class="discounted-price fw-bold ms-2">₹250</span>
+          </p>
+          <a href="#" class="btn btn-sm btn-gradient w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="product-card p-3 rounded shadow" style="background: rgba(255, 255, 255, 0.95);">
+          <img src="{% static 'images/img1.png' %}" class="img-fluid rounded mb-2" alt="Vitamin D3 Tablets">
+          <h6 class="mt-2 fw-bold">Vitamin D3 Tablets</h6>
+          <div class="rating mb-1 text-warning">
+            ★★★★★ <span class="text-muted">(40 reviews)</span>
+          </div>
+          <p class="price mb-2">
+            <span class="original-price text-muted text-decoration-line-through">₹220</span>
+            <span class="discounted-price fw-bold ms-2">₹180</span>
+          </p>
+          <a href="#" class="btn btn-sm btn-gradient w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="product-card p-3 rounded shadow" style="background: rgba(255, 255, 255, 0.95);">
+          <img src="{% static 'images/img2.png' %}" class="img-fluid rounded mb-2" alt="Blood Pressure Monitor">
+          <h6 class="mt-2 fw-bold">Blood Pressure Monitor</h6>
+          <div class="rating mb-1 text-warning">
+            ★★★★☆ <span class="text-muted">(30 reviews)</span>
+          </div>
+          <p class="price mb-2">
+            <span class="original-price text-muted text-decoration-line-through">₹1200</span>
+            <span class="discounted-price fw-bold ms-2">₹1100</span>
+          </p>
+          <a href="#" class="btn btn-sm btn-gradient w-100">Add to Cart</a>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="product-card p-3 rounded shadow" style="background: rgba(255, 255, 255, 0.95);">
+          <img src="{% static 'images/img7.png' %}" class="img-fluid rounded mb-2" alt="Multivitamin Syrup">
+          <h6 class="mt-2 fw-bold">Multivitamin Syrup</h6>
+          <div class="rating mb-1 text-warning">
+            ★★★★★ <span class="text-muted">(50 reviews)</span>
+          </div>
+          <p class="price mb-2">
+            <span class="original-price text-muted text-decoration-line-through">₹350</span>
+            <span class="discounted-price fw-bold ms-2">₹300</span>
+          </p>
+          <a href="#" class="btn btn-sm btn-gradient w-100">Add to Cart</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Gradient Add to Cart Button */
+  .btn-gradient {
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: #fff;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+  .btn-gradient:hover {
+    opacity: 0.9;
+  }
+</style>
+
+
+
+<!-- Customer Reviews -->
+<section id="reviews" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="mb-4 fw-bold text-center">Customer Reviews</h2>
+    <p class="mb-5 text-center color-grey">What our customers say about us</p>
+    <div class="row g-4">
+
+      <!-- Review Card 1 -->
+      <div class="col-md-4 d-flex">
+        <div class="review-card p-4 shadow-sm rounded flex-fill" 
+             style="background: linear-gradient(135deg, #14B8A6, #2697F6); color:white;">
+          <div class="d-flex align-items-center mb-3">
+            <img src="{% static 'images/img3.png' %}" alt="customer" 
+                 class="rounded-circle border border-3 border-white shadow-sm me-3" 
+                 width="60" height="60">
+            <h6 class="fw-bold mb-0">Priya S.</h6>
+          </div>
+          <div class="mb-2">
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-half text-warning"></i>
+          </div>
+          <p class="mt-2">“Excellent service! Got my order delivered in just one day.”</p>
+        </div>
+      </div>
+
+      <!-- Review Card 2 -->
+      <div class="col-md-4 d-flex">
+        <div class="review-card p-4 shadow-sm rounded flex-fill" 
+             style="background: linear-gradient(135deg, #14B8A6, #2697F6); color:white;">
+          <div class="d-flex align-items-center mb-3">
+           <img src="{% static 'images/img4.png' %}" alt="customer" 
+                 class="rounded-circle border border-3 border-white shadow-sm me-3" 
+                 width="60" height="60">
+            <h6 class="fw-bold mb-0">Karthik R.</h6>
+          </div>
+          <div class="mb-2">
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+          </div>
+          <p class="mt-2">“Products are genuine and prices are much better than stores.”</p>
+        </div>
+      </div>
+
+      <!-- Review Card 3 -->
+      <div class="col-md-4 d-flex">
+        <div class="review-card p-4 shadow-sm rounded flex-fill" 
+             style="background: linear-gradient(135deg, #14B8A6, #2697F6); color:white;">
+          <div class="d-flex align-items-center mb-3">
+            <img src="{% static 'images/img5.png' %}" alt="customer" 
+                 class="rounded-circle border border-3 border-white shadow-sm me-3" 
+                 width="60" height="60">
+            <h6 class="fw-bold mb-0">Aishwarya M.</h6>
+          </div>
+          <div class="mb-2">
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star text-warning"></i>
+            <i class="bi bi-star text-warning"></i>
+          </div>
+          <p class="mt-2">“Customer support was very helpful and polite.”</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- FAQ Section -->
+<section id="faq" class="py-5">
+  <div class="container">
+    <h2 class="mb-4 fw-bold text-center">Frequently Asked Questions</h2>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q1">
+          <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#a1">
+            How can I order medicines online?
+          </button>
+        </h2>
+        <div id="a1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Browse categories, add products to your cart, and checkout securely through our platform.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q2">
+          <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#a2">
+            Do you provide same-day delivery?
+          </button>
+        </h2>
+        <div id="a2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Yes, we offer same-day delivery in metro cities for orders placed before 2 PM.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q3">
+          <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#a3">
+            Are your medicines genuine?
+          </button>
+        </h2>
+        <div id="a3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            All products are sourced directly from certified manufacturers and distributors.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero {
+    height: 100vh;
+    background: url("{% static 'images/image1.png' %}") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    color: #000; /* text stays dark */
+    overflow: hidden;
+}
+.product-card {
+  min-height: 350px; /* equal height for all cards */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  background-color: #fff; /* white card */
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+
+.product-card .rating {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-card .price {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.product-card .original-price {
+  text-decoration: line-through;
+  margin-right: 0.5rem;
+  color: #777;
+}
+
+.product-card .discounted-price {
+  background: linear-gradient(90deg, #2697F6, #14B8A6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, #2697F6, #14B8A6);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+}
+
+/* Feature Title */
+.feature-card h5 {
+  font-weight: 600;
+  margin-top: 1rem;
+  color:
+}
+
+/* Feature Description */
+.feature-card p {
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  color: #333;
+}
+
+
+</style>
+{% endblock %}
+

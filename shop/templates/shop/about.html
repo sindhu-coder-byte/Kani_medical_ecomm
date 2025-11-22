@@ -1,0 +1,77 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}About Us - Kani Medical{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+  <!-- Hero Section -->
+  <div class="row align-items-center mb-5">
+    <div class="col-md-6">
+      <h1 class="fw-bold mb-3">About Us</h1>
+      <p class="lead">
+        Welcome to<span class="fw-bold text-primary"> Kani Medical</span>, your trusted partner in health and wellness. We are more than just a pharmacy -
+        we are a healthcare destination dedicated to providing safe, reliable, and affordable medical solutions
+        for you and your family, while offering expert guidance for your health needs. From prescription medicines
+        and wellness supplements to personal care and medical essentials, we aim to be your one-stop healthcare
+        partner, making quality healthcare accessible anytime, anywhere.
+      </p>
+    </div>
+    <div class="col-md-6 text-center">
+      <img src="{% static 'images/Image4.png' %}" class="img-fluid rounded" alt="About Us Hero Image">
+    </div>
+  </div>
+
+<!-- Our Mission & Values -->
+<div class="text-center mb-4">
+  <h2 class="fw-bold">Our Mission & Values</h2>
+  <p>We strive to provide quality healthcare while focusing on patient-first care, innovation, and excellence.</p>
+</div>
+
+<div class="row g-4">
+  <!-- Card 1: Patient First -->
+  <div class="col-md-4">
+    <div class="card mission-card text-center h-100">
+      <img src="{% static 'images/Frame1.png' %}" alt="Patient First" class="mb-3" style="width:60px;">
+      <h5 class="fw-bold">Patient First</h5>
+      <p>Our patients' health and safety are our top priority, guiding every decision we make.</p>
+    </div>
+  </div>
+
+  <!-- Card 2: Quality Care -->
+  <div class="col-md-4">
+    <div class="card mission-card text-center h-100">
+      <img src="{% static 'images/Frame2.png' %}" alt="Quality Care" class="mb-3" style="width:60px;">
+      <h5 class="fw-bold">Quality Care</h5>
+      <p>We ensure top-quality products and services to meet the highest healthcare standards.</p>
+    </div>
+  </div>
+
+  <!-- Card 3: Innovations -->
+  <div class="col-md-4">
+    <div class="card mission-card text-center h-100">
+      <img src="{% static 'images/Frame3.png' %}" alt="Innovation" class="mb-3" style="width:60px;">
+      <h5 class="fw-bold">Innovation</h5>
+      <p>We embrace innovative solutions to make healthcare more accessible and effective for everyone.</p>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+<style>
+.mission-card {
+  border: 2px solid #2697F6 !important; /* stronger blue border */
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: none; /* optional: remove shadow if you want border to stand out */
+}
+
+.mission-card h5 {
+  font-size: 1.5rem; /* increase h5 size */
+  margin-bottom: 0.75rem;
+}
+</style>
+{% endblock %}

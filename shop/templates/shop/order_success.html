@@ -1,0 +1,183 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container my-5">
+
+
+  <!-- Tick Icon above Thank You Message -->
+  <div class="tick-circle">
+    <img src="{% static 'images/tick.jpeg' %}" alt="Success Tick" />
+  </div>
+
+
+  <!-- Thank You Message -->
+  <p class="thank-you text-center mb-4">Thank you! Your order has been placed successfully.</p>
+
+  <!-- Blue-bordered box -->
+  <div class="order-success-box">
+
+    <!-- Order & Delivery Details -->
+    <div class="order-details-wrapper">
+      <!-- Left: Order Details -->
+      <div class="order-left">
+        <h5>Order Details</h5>
+        <p><strong>Order ID:</strong> {{ order.id }}</p>
+        <p><strong>Order Date:</strong> {{ order.created_at|date:"d M Y" }}</p>
+        <p><strong>Total Amount:</strong> ₹{{ order.total }}</p>
+      </div>
+
+      <!-- Delivery Info -->
+<div class="order-right">
+    <h5>Delivery Address</h5>
+    <p>{{ order.first_name }} {{ order.last_name }}</p>
+    <p>{{ order.address }}</p>
+    <p>Phone: {{ order.phone }}</p>
+</div>
+
+
+
+    <!-- Buttons -->
+    <div class="order-buttons">
+      <a href="{% url 'track_order' order.id %}" class="btn btn-gradient">
+        <i class="fa fa-truck"></i> Track Order
+      </a>
+      <a href="{% url 'home' %}" class="btn btn-border-gradient">
+        <i class="fa fa-arrow-left"></i> Continue Shopping
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+
+/* Tick Circle */
+.tick-circle {
+  width: 80px;              /* larger circle */
+  height: 80px;
+  {% comment %} background: #28a745;      /* green flat color */ {% endcomment %}
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px auto; /* center above message */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Tick Icon/Image */
+.tick-circle img {
+  width: 80px;              /* proportional to circle */
+  height: 80px;
+  object-fit: contain;
+}
+
+/* Thank You Message */
+.thank-you {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2697F6;
+  margin-bottom: 30px;
+}
+
+/* Blue-bordered box */
+.order-success-box {
+  border: 2px solid #2697F6;
+  border-radius: 15px;
+  padding: 60px 30px 30px 30px;
+  text-align: center;
+  max-width: 850px;
+  margin: auto;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+
+
+/* Order Details Wrapper */
+.order-details-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.order-left, .order-right {
+  flex: 1;
+  min-width: 280px;
+  text-align: left;
+  border: 1px solid #2697F6;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.order-left h5, .order-right h5 {
+  color: #2697F6;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+/* Buttons */
+.order-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+}
+
+.btn-border-gradient {
+  position: relative;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  z-index: 0;
+
+  /* Text gradient */
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-border-gradient::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+  border-radius: 32px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+}
+
+.btn-border-gradient:hover {
+  opacity: 0.9;
+}
+
+</style>
+{% endblock %}

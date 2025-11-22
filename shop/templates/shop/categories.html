@@ -1,0 +1,158 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}Categories - Kani Medical{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Categories & Sort -->
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+        <div class="category-btns">
+            {% for category in categories %}
+                <button data-category="{{ category.name }}">{{ category.name }}</button>
+            {% endfor %}
+        </div>
+        <select class="form-select sort-select mt-2 mt-md-0" style="width: 200px;">
+            <option value="popularity">Sort by Popularity</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+        </select>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="products-grid">
+        {% for product in products %}
+        <div class="col product-item" data-category="{{ product.category.name }}" data-price="{{ product.price }}" data-popularity="{{ product.rating|default:0 }}">
+            
+            <!-- Corrected URL: use 'id' not 'product_id' -->
+            <a href="{% url 'product_detail' product_id=product.id %}?from_category=1" class="text-decoration-none text-dark">
+             <div class="product-card position-relative h-100 d-flex flex-column">
+
+                    <!-- Badge -->
+                    {% if product.badge %}
+                        {% if product.badge == "Best Seller" %}
+                            <div class="product-badge badge-best-seller">{{ product.badge }}</div>
+                        {% elif product.badge == "New" %}
+                            <div class="product-badge badge-new">{{ product.badge }}</div>
+                        {% else %}
+                            <div class="product-badge badge-default">{{ product.badge }}</div>
+                        {% endif %}
+                    {% endif %}
+
+                    <!-- Wishlist Icon -->
+                    <div class="wishlist-icon"><i class="bi bi-heart"></i></div>
+
+                    <!-- Product Image -->
+                    <img src="{{ product.image.url|default_if_none:'/static/images/placeholder.png' }}" alt="{{ product.name }}" class="img-fluid mb-2">
+
+                    <!-- Product Name -->
+                    <div class="product-name">{{ product.name }}</div>
+
+                    <!-- Product Description -->
+                    <div class="product-desc">{{ product.description|truncatechars:50 }}</div>
+
+                    <!-- Rating & Reviews -->
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="product-rating me-2">
+                            {% for i in product.rating|default:0|times %}
+                                <i class="bi bi-star-fill text-warning"></i>
+                            {% endfor %}
+                        </div>
+                        <small class="text-muted">({{ product.rating_count|default:0 }})</small>
+                    </div>
+
+                    <!-- Price & Add Button -->
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <div>
+                            <span class="price-gradient">₹{{ product.price }}</span>
+                            {% if product.original_price %}
+                                <span class="original-price">₹{{ product.original_price }}</span>
+                            {% endif %}
+                        </div>
+                        <button class="add-cart-btn"><i class="bi bi-cart-plus me-1"></i> Add</button>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+
+
+<style>
+/* Category Buttons */
+.category-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+.category-btns button { border: 1px solid #2697F6; border-radius: 6px; background: #fff; color: #2697F6; padding: 6px 12px; cursor: pointer; transition: 0.3s; }
+.category-btns button.active, .category-btns button:hover { background: linear-gradient(to bottom, #2697F6, #14B8A6); color: #fff; }
+.sort-select { float: right; }
+
+/* Product Card */
+.product-card { background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+.product-badge { position: absolute; top: 10px; left: 10px; color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; }
+.badge-best-seller { background: #28a745; } /* green */
+.badge-new { background: #0d6efd; } /* blue */
+.badge-default { background: #FF5E5E; }
+
+.wishlist-icon { position: absolute; top: 10px; right: 10px; color: #2697F6; cursor: pointer; transition: 0.3s; }
+.wishlist-icon:hover { color: #FF5E5E; }
+
+.product-card img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px; transition: transform 0.3s; }
+.product-card:hover img { transform: scale(1.05); }
+
+.product-name { font-weight: 600; margin-bottom: 5px; }
+.product-desc { font-size: 0.9rem; color: #6c757d; margin-bottom: 8px; }
+.product-rating { color: #FFD700; font-size: 0.85rem; margin-bottom: 8px; }
+
+.product-price { font-weight: 600; }
+.price-gradient { background: linear-gradient(90deg, #2697F6, #14B8A6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.original-price { text-decoration: line-through; color: #6c757d; margin-left: 8px; font-weight: 400; }
+
+.add-cart-btn { background: linear-gradient(to bottom, #2697F6, #14B8A6); color: #fff; border: none; border-radius: 8px; padding: 8px; font-weight: 600; transition: 0.3s; }
+.add-cart-btn:hover { opacity: 0.9; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .category-btns { justify-content: center; }
+    .sort-select { width: 100%; margin-top: 10px; }
+}
+</style>
+
+<script>
+// Category filter
+const categoryButtons = document.querySelectorAll('.category-btns button');
+const productItems = document.querySelectorAll('.product-item');
+
+categoryButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        categoryButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.category;
+        productItems.forEach(item => {
+            item.style.display = (cat === 'all' || item.dataset.category === cat) ? 'block' : 'none';
+        });
+    });
+});
+
+// Sort products
+const sortSelect = document.querySelector('.sort-select');
+sortSelect.addEventListener('change', () => {
+    const grid = document.getElementById('products-grid');
+    const items = Array.from(productItems);
+    let sorted = [];
+    if (sortSelect.value === 'low-high') {
+        sorted = items.sort((a,b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+    } else if (sortSelect.value === 'high-low') {
+        sorted = items.sort((a,b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+    } else { // popularity
+        sorted = items.sort((a,b) => parseFloat(b.dataset.popularity) - parseFloat(a.dataset.popularity));
+    }
+    grid.innerHTML = '';
+    sorted.forEach(item => grid.appendChild(item));
+});
+</script>
+{% endblock %}

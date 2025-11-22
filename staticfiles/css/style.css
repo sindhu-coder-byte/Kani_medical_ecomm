@@ -1,0 +1,191 @@
+
+
+/* White transparent overlay */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6); /* white with 60% transparency */
+    z-index: 1;
+}
+ .hero-content {
+    position: relative;
+    z-index: 2;
+}
+  .hero h1 { font-size: 3rem; font-weight: 700; color: #000; }
+  .hero h2 { font-size: 2rem; margin-bottom: 15px; color: #f0fdf4; }
+  .hero p { font-size: 1.2rem; margin-bottom: 25px; color:#000; }
+
+  /* Buttons */
+.btn-gradient {
+    background: linear-gradient(90deg, #00c6ff, #0072ff); /* Example gradient */
+    color: #fff;
+    padding: 20px 28px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s ease;
+    display: inline-block;
+}
+
+ .btn-gradient:hover {
+    opacity: 0.9;
+}
+ /* Outline Gradient Button */
+.btn-border-gradient {
+    position: relative;
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    background: transparent;
+    border: 2px solid transparent;
+    background-image: linear-gradient(90deg,#14B8A6, #2697F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: 0.3s ease;
+}
+
+/* Gradient Border Effect */
+.btn-border-gradient::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    padding: 2px; /* border thickness */
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+}
+/* Hover Effect */
+.btn-border-gradient:hover {
+    -webkit-text-fill-color: #fff; /* text turns white */
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+}
+
+/* Category & Feature Cards */
+.category-card{
+  width: 100%;                 /* ensures equal width in grid */
+  min-height: 200px;           /* fixed height for uniformity */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  color: black;               /* text color black */
+}
+
+/* Hover effect */
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Card colors with gradient + transparency */
+.category-pink { 
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(255,107,129,0.3)); 
+}
+.category-blue { 
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(30,144,255,0.3)); 
+}
+.category-green { 
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(40,167,69,0.3)); 
+}
+.category-purple { 
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(111,66,193,0.3)); 
+}
+.category-yellow { 
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(255,193,7,0.3)); 
+}
+.category-teal { 
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(32,201,151,0.3)); 
+}
+.category-orange { 
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(253,126,20,0.3)); 
+}
+
+/* Icon/Image styling */
+.category-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+/* Text styling */
+.category-card p {
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Feature Cards */
+.feature-card {
+  background-color: #fff;        /* white card */
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 250px;             /* equal height for all cards */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Circle Icon Background */
+.feature-card i {
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+/* Circle Colors */
+.icon-green { background-color: #28a745; }
+.icon-blue { background-color: #1e90ff; }
+.icon-yellow { background-color: #ffc107; color: black; } /* darker text for yellow */
+.icon-purple { background-color: #6f42c1; }
+
+/* Feature Title */
+.feature-card h5 {
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+/* Feature Description */
+.feature-card p {
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  color: #333;
+}

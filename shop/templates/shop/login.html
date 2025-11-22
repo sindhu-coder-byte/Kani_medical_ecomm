@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Kani Medical</title>
+
+  <!-- Google Font Urbanist -->
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Urbanist', sans-serif; background: #f9f9f9; }
+    .auth-card { max-width: 450px; margin: 60px auto; background: #fff; border-radius: 12px; padding: 40px; box-shadow: 0px 6px 18px rgba(0,0,0,0.08); }
+    .auth-card h3 { font-weight: 700; margin-bottom: 10px; text-align: center; }
+    .auth-card p { text-align: center; color: #6c757d; margin-bottom: 25px; }
+    .form-control { border: 1.5px solid #2697F6; border-radius: 8px; padding: 10px 12px; }
+    .form-control:focus { box-shadow: 0 0 5px #2697F6; }
+    .btn-auth { background: #2697F6; color: #fff; font-weight: 600; border-radius: 8px; width: 100%; padding: 10px; margin-top: 10px; }
+    .btn-auth:hover { background: #14B8A6; }
+    .divider { text-align: center; margin: 20px 0; font-size: 0.9rem; color: #6c757d; }
+    .social-btns { display: flex; justify-content: center; gap: 15px; }
+    .social-btns a { border: 1.5px solid #ddd; border-radius: 6px; padding: 10px 16px; display: flex; align-items: center; justify-content: center; background: #fff; transition: 0.3s; }
+    .social-btns a:hover { border-color: #2697F6; }
+    .auth-text { text-align: center; margin-top: 20px; font-size: 0.95rem; }
+    .auth-text a { color: #2697F6; font-weight: 600; text-decoration: none; }
+    .auth-text a:hover { text-decoration: underline; }
+    .error-message { color: red; font-size: 0.85rem; margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+  <div class="auth-card">
+    <h3>Login to Your Account</h3>
+    <p>Welcome back! Please enter your details</p>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST" novalidate>
+      {% csrf_token %}
+
+      <!-- Username / Email -->
+      <div class="mb-3">
+        <label class="form-label">Username or Email</label>
+        <input type="text" name="username" class="form-control" placeholder="Enter username or email" value="{{ form.username.value|default:'' }}">
+        {% if form.username.errors %}
+          <div class="error-message">{{ form.username.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3 position-relative">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Enter password">
+        <i class="bi bi-eye position-absolute" id="toggleLoginPassword" style="right: 15px; top: 65%; cursor: pointer;"></i>
+        {% if form.password.errors %}
+          <div class="error-message">{{ form.password.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="remember_me" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Remember me</label>
+        </div>
+        <a href="#" class="forgot-link">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-auth">Login</button>
+    </form>
+
+    <div class="divider">Or continue with</div>
+    <div class="social-btns">
+      <a href="#"><i class="bi bi-google text-danger"></i></a>
+      <a href="#"><i class="bi bi-facebook text-primary"></i></a>
+      <a href="#"><i class="bi bi-apple"></i></a>
+    </div>
+
+    <div class="auth-text">
+      Don’t have an account? <a href="{% url 'signup' %}" class="btn btn-signup">Signup</a>
+    </div>
+  </div>
+
+  <script>
+    // Toggle password
+    const toggleLoginPassword = document.getElementById("toggleLoginPassword");
+    const loginPassword = document.querySelector("input[name='password']");
+
+    toggleLoginPassword.addEventListener("click", function () {
+      const type = loginPassword.type === "password" ? "text" : "password";
+      loginPassword.type = type;
+      this.classList.toggle("bi-eye-slash");
+    });
+  </script>
+</body>
+</html>

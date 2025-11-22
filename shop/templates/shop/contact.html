@@ -1,0 +1,133 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - Kani Medical{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <!-- Heading -->
+      <div class="text-center mb-4">
+        <h2 class="fw-bold">Send Us a Message</h2>
+        <p>We’d love to hear from you! Fill out the form below and our team will get back to you shortly.</p>
+      </div>
+
+<!-- Form Card -->
+<div class="card contact-card p-5 shadow-lg">
+  <form method="POST" action="{% url 'contact_submit' %}">
+    {% csrf_token %}
+
+    <!-- Name Fields -->
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <div class="form-group position-relative">
+          <i class="bi bi-person icon-input"></i>
+          <input type="text" name="first_name" class="form-control ps-5" placeholder="First Name" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group position-relative">
+          <i class="bi bi-person icon-input"></i>
+          <input type="text" name="last_name" class="form-control ps-5" placeholder="Last Name" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email & Phone -->
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <div class="form-group position-relative">
+          <i class="bi bi-envelope icon-input"></i>
+          <input type="email" name="email" class="form-control ps-5" placeholder="Email Address" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group position-relative">
+          <i class="bi bi-telephone icon-input"></i>
+          <input type="text" name="phone" class="form-control ps-5" placeholder="Phone Number" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Box -->
+    <div class="mb-4 position-relative">
+      <i class="bi bi-chat-up-text icon-input"></i>
+      <textarea name="message" class="form-control ps-4" rows="6" placeholder="Please describe your inquiry in detail.." required></textarea>
+    </div>
+
+    <!-- Terms & Conditions -->
+    <div class="mb-4 form-check">
+      <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+      <label class="form-check-label" for="agreeTerms">
+        I agree to the <span class="fw-bold text-primary">Privacy Policy</span> and consent  to the processing of my personal data for the  purpose of responding to my inquiry.
+      </label>
+    </div>
+
+    <!-- Send Button -->
+    <button type="submit" class="btn w-100 btn-flat text-white fw-bold">
+      <i class="bi bi-send-fill me-2"></i> Send Message
+    </button>
+  </form>
+</div>
+
+<style>
+/* Big Card */
+.contact-card {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 12px 28px rgba(38, 151, 246, 0.25);
+  transition: box-shadow 0.3s;
+}
+.contact-card:hover {
+  box-shadow: 0 14px 32px rgba(38, 151, 246, 0.35);
+}
+
+/* Input Fields */
+.form-control {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  height: 50px;
+}
+.form-control:focus, .form-control:hover {
+  border-color: #2697F6;
+  box-shadow: 0 0 10px rgba(38, 151, 246, 0.4);
+  outline: none;
+}
+
+/* Icons inside inputs */
+.icon-input {
+  position: absolute;
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
+  color: #2697F6;
+  font-size: 1.2rem;
+}
+
+/* Textarea */
+textarea.form-control {
+  height: 140px;
+  resize: none;
+  padding-top: 12px;
+}
+
+/* Button */
+.btn-flat {
+  background-color: #2697F6;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 0.75rem;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.btn-flat:hover {
+  background-color: #14B8A6;
+}
+</style>
+
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}{{ product.name }} - Kani Medical{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row">
+
+<!-- Left: Product Images -->
+<div class="col-12 col-md-5 mb-4 mb-md-0">
+
+  <!-- Main Product Image -->
+  <div class="main-image mb-3 text-center">
+    <img id="mainProductImg" 
+         src="{{ product.image.url }}" 
+         alt="{{ product.name }}" 
+         class="img-fluid rounded shadow-sm"
+         style="max-height: 400px; object-fit: contain;">
+  </div>
+
+  <!-- Thumbnails Row -->
+  {% if product.thumbnails.exists %}
+    <div class="thumbnails-wrap mt-3">
+      <div class="d-flex flex-wrap justify-content-center gap-2">
+        {% for thumb in product.thumbnails.all %}
+          <img src="{{ thumb.image.url }}" 
+               class="img-thumbnail thumb-img" 
+               style="width:80px; height:80px; object-fit: cover; cursor:pointer; border-radius:6px;" 
+               onclick="changeImage('{{ thumb.image.url }}', this)">
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+
+
+    <!-- Right: Product Info -->
+    <div class="col-12 col-md-7">
+      <h2 class="fw-bold">{{ product.name }}</h2>
+      <p class="text-muted">{{ product.short_description }}</p>
+
+      <!-- Rating & Stock -->
+      <div class="d-flex align-items-center mb-3">
+        <div class="text-warning me-2">
+            {% for i in product.rating|default:0|times %}
+              <i class="bi bi-star-fill"></i>
+            {% endfor %}
+        </div>
+        <small class="text-muted">({{ product.rating_count|default:0 }} reviews)</small>
+        {% if product.in_stock %}
+          <span class="badge bg-success ms-3">In Stock</span>
+        {% else %}
+          <span class="badge bg-danger ms-3">Out of Stock</span>
+        {% endif %}
+      </div>
+
+<!-- Price & Offer -->
+<div class="mb-3 d-flex align-items-center gap-2">
+  {% if product.discount_price and product.discount_price < product.price %}
+    <!-- Discounted Price -->
+    <span class="h4 fw-bold price-gradient">₹{{ product.discount_price }}</span>
+
+    <!-- Original Price (Strike-through) -->
+    <span class="text-muted text-decoration-line-through ms-2">₹{{ product.price }}</span>
+
+    <!-- Offer Badge -->
+    {% if product.offer %}
+      <span class="badge ms-2" style="background: linear-gradient(90deg, #FF4D4F, #FF7875); color:#fff; font-weight:600;">
+        {{ product.offer }} OFF
+      </span>
+    {% endif %}
+  {% else %}
+    <!-- No Discount -->
+    <span class="h4 fw-bold price-gradient">₹{{ product.price }}</span>
+  {% endif %}
+</div>
+
+
+
+<!-- Quantity selector -->
+<div class="mb-3 d-flex align-items-center gap-2">
+  <label class="me-2 fw-semibold">Quantity:</label>
+  <div class="input-group" style="width:140px;">
+    <button class="btn btn-outline-secondary" type="button" onclick="changeQty(-1)">-</button>
+    <input type="text" id="quantity" class="form-control text-center" value="1" oninput="updateTotal()">
+    <button class="btn btn-outline-secondary" type="button" onclick="changeQty(1)">+</button>
+  </div>
+</div>
+
+      <!-- Dynamic Price Display -->
+<div class="mb-3">
+  <span class="fw-bold">Total:</span>
+  <span id="totalPrice" class="h5 ms-2 text-success fw-bold">
+    ₹{% if product.discount_price and product.discount_price < product.price %}
+      {{ product.discount_price }}
+    {% else %}
+      {{ product.price }}
+    {% endif %}
+  </span>
+</div>
+
+<!-- Horizontal Actions -->
+<div class="d-flex gap-2 mb-4">
+  <button class="btn btn-gradient-buy flex-grow-1">
+    <i class="bi bi-lock-fill me-1"></i> Buy Now
+  </button>
+
+  <!-- Dynamic Add to Cart -->
+  <form id="addToCartForm" action="{% url 'add_to_cart' product.id %}" method="get" class="flex-grow-1">
+    <input type="hidden" name="quantity" id="hiddenQty" value="1">
+    <button type="submit" class="btn btn-gradient-cart w-100">
+      <i class="bi bi-cart-plus-fill me-1"></i> Add to Cart
+    </button>
+  </form>
+
+  <button class="btn btn-outline-secondary"><i class="bi bi-heart"></i></button>
+</div>
+
+<!-- Features -->
+<div class="d-flex gap-4 mb-4 flex-wrap">
+  <div class="text-center">
+    <i class="bi bi-shield-check text-primary fs-2"></i>
+    <div><small class="fw-bold text-dark">100% Genuine</small></div>
+  </div>
+  <div class="text-center">
+    <i class="bi bi-lock-fill text-success fs-2"></i>
+    <div><small class="fw-bold text-dark">Secure Payment</small></div>
+  </div>
+  <div class="text-center">
+    <i class="bi bi-truck text-info fs-2"></i>
+    <div><small class="fw-bold text-dark">Fast Delivery</small></div>
+  </div>
+</div>
+</div>
+
+    <!-- Only show if from category -->
+  {% if from_category %}
+  <div class="mt-5">
+    <h4 class="fw-bold text-dark">Product Description</h4>
+    <p>{{ product.description }}</p>
+  </div>
+
+  {% if product.key_benefits %}
+  <div class="mt-4">
+    <h4 class="fw-bold text-dark">Key Benefits</h4>
+    <ul>
+      {% for benefit in product.key_benefits.splitlines %}
+        <li>{{ benefit }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endif %}
+
+  <!-- Related Products -->
+  <div class="mt-5">
+    <h4 class="fw-bold text-dark">Related Products</h4>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      {% for item in related_products %}
+        <div class="col">
+          <div class="card h-100 shadow-sm">
+            <img src="{{ item.image.url }}" class="card-img-top product-card-img" alt="{{ item.name }}">
+            <div class="card-body d-flex flex-column">
+              <h6 class="card-title">{{ item.name }}</h6>
+              <p class="card-text fw-bold">₹{{ item.price }}</p>
+              <button class="btn btn-gradient-cart mt-auto">
+                <i class="bi bi-cart-plus-fill me-1"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+<style>
+/* Gradient Buttons */
+.btn-gradient-buy { background: linear-gradient(90deg, #2697F6, #14B8A6); color: #fff; border-radius: 8px; font-weight: 600; transition: 0.3s; }
+.btn-gradient-buy:hover { background: linear-gradient(90deg, #14B8A6, #2697F6); }
+
+.btn-gradient-cart { background: linear-gradient(90deg, #00C6FF, #0072FF); color: #fff; border-radius: 8px; font-weight: 600; transition: 0.3s; }
+.btn-gradient-cart:hover { background: linear-gradient(90deg, #0072FF, #00C6FF); }
+
+.thumb-img { border: 1px solid transparent; transition: 0.2s; }
+.thumb-img:hover { border: 2px solid #2697F6; }
+.thumb-img.active { border: 2px solid #14B8A6; }
+
+.input-group button:hover { background-color: #2697F6; color: #fff; transition: 0.2s; cursor: pointer; }
+
+.product-card-img { transition: transform 0.3s; }
+.card:hover .product-card-img { transform: scale(1.05); }
+</style>
+
+<script>
+const price = parseFloat("{{ product.discount_price|default:product.price }}");
+const qtyInput = document.getElementById("quantity");
+const totalPrice = document.getElementById("totalPrice");
+const hiddenQty = document.getElementById("hiddenQty");
+
+function updateTotal() {
+  let qty = parseInt(qtyInput.value);
+  if (isNaN(qty) || qty < 1) qty = 1;
+  qtyInput.value = qty;
+  hiddenQty.value = qty;
+
+  const total = (price * qty).toFixed(2);
+  totalPrice.innerText = "₹" + total;
+}
+
+function changeQty(val) {
+  let qty = parseInt(qtyInput.value);
+  if (isNaN(qty)) qty = 1;
+  qty += val;
+  if (qty < 1) qty = 1;
+  qtyInput.value = qty;
+  hiddenQty.value = qty;
+  updateTotal();
+}
+
+// Initialize on page load
+document.addEventListener("DOMContentLoaded", updateTotal);
+</script>
+
+{% endblock %}
