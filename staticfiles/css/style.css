@@ -177,15 +177,3 @@
 .icon-yellow { background-color: #ffc107; color: black; } /* darker text for yellow */
 .icon-purple { background-color: #6f42c1; }
 
-/* Feature Title */
-.feature-card h5 {
-  font-weight: 600;
-  margin-top: 1rem;
-}
-
-/* Feature Description */
-.feature-card p {
-  font-size: 0.95rem;
-  margin-top: 0.5rem;
-  color: #333;
-}
