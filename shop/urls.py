@@ -7,7 +7,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about_page, name='About'),
     path('contact/', views.contact_page, name='Contact'),
-     path('contact/submit/', views.contact_page, name='contact_submit'),
+    path('contact/submit/', views.contact_page, name='contact_submit'),
+
     path('signup/', views.signup_view, name='signup'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
@@ -21,8 +22,7 @@ urlpatterns = [
     path('order-success/<int:order_id>/', views.order_success, name='order_success'),
 
     # Order Tracking
-# shop/urls.py
-   path('track/<int:order_id>/', views.track_order, name='track_order'),
+    path('track/<int:order_id>/', views.track_order, name='track_order'),
 
     # Products
     path('products/<int:product_id>/', views.product_detail, name='product_detail'),
@@ -31,5 +31,5 @@ urlpatterns = [
     path('categories/', views.categories, name='categories'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files even when DEBUG = False (Render deploy)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
